@@ -75,12 +75,12 @@
     }
     XMLHttpRequest.prototype._open = XMLHttpRequest.prototype.open;
     Object.defineProperty(XMLHttpRequest.prototype, "open", {
-        get: function() {
+        get: function () {
             return this._open;
         },
-        set: function(f) {
+        set: function (f) {
             this._open = new Proxy(f, {
-                apply: function(f, instance, fargs) {
+                apply: function (f, instance, fargs) {
                     listen.call(instance, ...fargs);
                     return f.call(instance, ...fargs);
                 }
@@ -88,8 +88,8 @@
         }
     });
     XMLHttpRequest.prototype.open = XMLHttpRequest.prototype.open;
-    const listen = function() {
-        this.addEventListener("load", function() {
+    const listen = function () {
+        this.addEventListener("load", function () {
             if (this.responseURL.match(/\.m3u8(\?|$)/)) {
                 console.log(this.responseURL);
             }
@@ -165,6 +165,7 @@
                 }
                 case "nicochannel.jp":
                 case "gs-ch.com":
+                case "qlover.jp":
                 case "pizzaradio.jp": {
                     matchurl(this, "https://hls-auth.cloud.stream.co.jp/key");
                     break;
@@ -232,7 +233,7 @@
                 type: "key",
                 key: key,
             });
-        } catch {}
+        } catch { }
     };
 
     const spwn = () => {
